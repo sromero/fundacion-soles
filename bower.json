@@ -1,0 +1,23 @@
+{
+  "name": "fundacion-soles",
+  "authors": [
+    "sromero <santiago.romero@mercadolibre.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/resources/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.6.4",
+    "bootstrap": "^5.2.3",
+    "angular": "^1.8.3"
+  }
+}
