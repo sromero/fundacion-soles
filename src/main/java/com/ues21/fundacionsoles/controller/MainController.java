@@ -9,7 +9,7 @@ public class MainController {
 
     @GetMapping("/")
     public String root(Model model) {
-        return "test";
+        return "dashboard";
     }
 
     @GetMapping("/login")
@@ -18,7 +18,7 @@ public class MainController {
     }
 
     @GetMapping("/test")
-    public String testIndex( Model model) {
-        return "test";
+    public String testIndex(Model model) {
+        return "dashboard";
     }
 }
