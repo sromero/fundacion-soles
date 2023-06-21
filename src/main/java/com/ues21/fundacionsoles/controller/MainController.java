@@ -3,22 +3,16 @@ package com.ues21.fundacionsoles.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api/v1")
 public class MainController {
-
-    @GetMapping("/")
-    public String root(Model model) {
-        return "dashboard";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
 
     @GetMapping("/test")
     public String testIndex(Model model) {
-        return "dashboard";
+        System.out.println("llegamos al test");
+        return "test";
     }
 }

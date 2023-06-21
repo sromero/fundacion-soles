@@ -33,6 +33,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        String requestUrl = request.getRequestURI();
+
+        // Verificar si la URL debe omitirse en el filtro
+        if (shouldSkipFilter(requestUrl)) {
+            // Pasar la solicitud directamente al siguiente filtro en la cadena
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // get JWT token from http request
         String token = getTokenFromRequest(request);
 
@@ -71,4 +80,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
+    private boolean shouldSkipFilter(String requestUrl) {
+        // Agrega las URLs que deseas omitir en este filtro
+        return requestUrl.equals("/api/v1/auth/backLogin") || requestUrl.startsWith("auth/backLogin") || requestUrl.contains("web/flow");
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,8 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import javax.sql.DataSource;
+
 @Configuration
 @EnableMethodSecurity
+@EnableWebSecurity
 public class SecurityConfig {
 
     private UserDetailsService userDetailsService;
@@ -47,19 +52,33 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/h2/**").permitAll()
-                .and()
-                .csrf().disable()
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
+        http.csrf().disable()
+                .authorizeHttpRequests((authorize) ->
+                        {
+                            try {
+                                authorize
+                                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/h2/**").permitAll()
+                                        .requestMatchers("/api/auth/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/api/v1/**").permitAll()
+                                        .requestMatchers("/web/flow/**").permitAll()
+                                        .requestMatchers("/web/flow/css/**").permitAll()
+                                        .requestMatchers("/web/flow/js/**").permitAll()
+                                        .requestMatchers("/web/flow/assets/**").permitAll()
+                                        .anyRequest().authenticated()
+                                        .and()
+                                .formLogin()
+                                        .loginPage("/web/flow/login")
+                                        .permitAll()
+                                        .and();
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
 
-                ).exceptionHandling(exception -> exception
+                ).exceptionHandling( exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)
-                ).sessionManagement(session -> session
+                ).sessionManagement( session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
@@ -67,20 +86,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails ramesh = User.builder()
-//                .username("ramesh")
-//                .password(passwordEncoder().encode("ramesh"))
-//                .roles("USER")
-//                .build();
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(ramesh, admin);
-//    }
 }
