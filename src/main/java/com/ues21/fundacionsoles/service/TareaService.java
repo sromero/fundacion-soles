@@ -3,6 +3,7 @@ package com.ues21.fundacionsoles.service;
 import com.ues21.fundacionsoles.model.Tarea;
 import com.ues21.fundacionsoles.repository.TareaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,12 @@ public class TareaService implements TareaServiceInterface{
 
     @Override
     public Tarea saveTarea(Tarea tarea) {
-        return tareaRepository.save(tarea);
+        try {
+            return tareaRepository.save(tarea);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al guardar la tarea");
+        }
     }
 
     @Override
