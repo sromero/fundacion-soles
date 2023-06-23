@@ -42,4 +42,9 @@ public class Tarea {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="idArea")
     private Area area;
+
+    @JsonIgnoreProperties("tareasAsignadas")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idVoluntario")
+    private Voluntario voluntario;
 }
