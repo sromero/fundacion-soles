@@ -1,33 +1,19 @@
 package com.ues21.fundacionsoles.model;
 
-
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "roles")
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
-
-    public Role() {}
-
-    public Role(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
 }
