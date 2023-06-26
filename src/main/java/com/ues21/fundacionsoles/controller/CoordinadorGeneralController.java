@@ -4,6 +4,7 @@ import com.ues21.fundacionsoles.model.CoordinadorGeneral;
 import com.ues21.fundacionsoles.service.CoordinadorGeneralService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_COORDINADOR', 'ROLE_ADMINISTRADOR')")
 public class CoordinadorGeneralController {
 
     @Autowired

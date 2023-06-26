@@ -4,6 +4,7 @@ import com.ues21.fundacionsoles.model.AdministradorSistema;
 import com.ues21.fundacionsoles.service.AdministradorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
 public class AdministradorController {
 
     @Autowired
@@ -26,7 +28,6 @@ public class AdministradorController {
 
     // Save operation
     @PostMapping("/administradores")
-
     public AdministradorSistema saveAdministrador(
             @Valid @RequestBody AdministradorSistema administradorSistema)
     {
@@ -48,7 +49,6 @@ public class AdministradorController {
 
     // Update operation
     @PutMapping("/administradores/{idAdministrador}")
-
     public AdministradorSistema
     updateAdministrador(@RequestBody AdministradorSistema administradorSistema,
                @PathVariable("idAdministrador") Long idAdministrador)
@@ -59,7 +59,6 @@ public class AdministradorController {
 
     // Delete operation
     @DeleteMapping("/administradores/{idAdministrador}")
-
     public String de(@PathVariable("idAdministrador")
                      Long idAdministrador)
     {

@@ -4,7 +4,6 @@ import com.ues21.fundacionsoles.dto.LoginDto;
 import com.ues21.fundacionsoles.dto.RegisterDto;
 import com.ues21.fundacionsoles.model.JWTAuthResponse;
 import com.ues21.fundacionsoles.service.AuthService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +34,6 @@ public class AuthController {
     // Build Register REST API
     @PostMapping(value = {"/register", "/signup"})
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-        String response = authService.register(registerDto);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return ResponseEntity.ok(authService.register(registerDto));
     }
 }

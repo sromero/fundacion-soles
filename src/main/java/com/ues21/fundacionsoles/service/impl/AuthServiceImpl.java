@@ -9,6 +9,7 @@ import com.ues21.fundacionsoles.repository.RoleRepository;
 import com.ues21.fundacionsoles.repository.UserRepository;
 import com.ues21.fundacionsoles.security.JwtTokenProvider;
 import com.ues21.fundacionsoles.service.AuthService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,10 +17,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Transactional
+@Log4j2
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -28,7 +32,6 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
-
 
     public AuthServiceImpl(AuthenticationManager authenticationManager,
                            UserRepository userRepository,
@@ -45,10 +48,17 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String login(LoginDto loginDto) {
 
+        Authentication authentication;
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword());
 
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        try {
+            authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        } catch (Exception e) {
+            log.info("Invalid username or password!.", HttpStatus.BAD_REQUEST);
+            throw new BaseException(HttpStatus.BAD_REQUEST, "Invalid username or password!.");
+        }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -78,10 +88,15 @@ public class AuthServiceImpl implements AuthService {
 
         Set<Role> roles = new HashSet<>();
 
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
-        roles.add(userRole);
-        user.setRoles(roles);
+        try {
+            Role userRole = roleRepository.findByName(registerDto.getRole()).get();
+            roles.add(userRole);
+        } catch (Exception e) {
+            log.info("Role not found!.", HttpStatus.BAD_REQUEST);
+            throw new BaseException(HttpStatus.BAD_REQUEST, "Role not found. Should be like ie role:ROLE_VOLUNTARIO");
+        }
 
+        user.setRoles(roles);
         userRepository.save(user);
 
         return "User registered successfully!.";

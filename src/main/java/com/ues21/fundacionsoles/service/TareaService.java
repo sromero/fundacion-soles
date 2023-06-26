@@ -1,9 +1,11 @@
 package com.ues21.fundacionsoles.service;
 
+import com.ues21.fundacionsoles.exception.BaseException;
 import com.ues21.fundacionsoles.model.Tarea;
 import com.ues21.fundacionsoles.repository.TareaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class TareaService implements TareaServiceInterface{
             return tareaRepository.save(tarea);
         } catch (DataAccessException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error al guardar la tarea");
+            throw new BaseException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al guardar la tarea");
         }
     }
 
