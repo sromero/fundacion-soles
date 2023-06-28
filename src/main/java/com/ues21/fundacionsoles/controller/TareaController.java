@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @PreAuthorize("hasAnyRole('ROLE_COORDINADOR', 'ROLE_VOLUNTARIO')")
+@CrossOrigin(origins = "*")
 public class TareaController {
 
     @Autowired
