@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("hasAnyRole('ROLE_VOLUNTARIO')")
-@CrossOrigin(origins = "*")
 public class VoluntarioController {
 
     @Autowired
