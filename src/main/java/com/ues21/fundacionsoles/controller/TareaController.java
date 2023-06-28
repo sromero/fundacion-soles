@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("hasAnyRole('ROLE_COORDINADOR', 'ROLE_VOLUNTARIO')")
-@CrossOrigin(origins = "*")
 public class TareaController {
 
     @Autowired
