@@ -1,5 +1,6 @@
 package com.ues21.fundacionsoles.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.Date;
 
@@ -32,8 +35,13 @@ public class Tarea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idTarea;
+    private long idTarea;
     private String descripcion;
+
+    @ManyToOne
+    @JoinColumn(name = "estado")
+    private Estado estado;
+
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date fechaFinalizacion;
 
@@ -45,6 +53,8 @@ public class Tarea {
 
     @JsonIgnoreProperties("tareasAsignadas")
     @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.ALL)
+    @JsonBackReference
     @JoinColumn(name = "idVoluntario")
     private Voluntario voluntario;
 }

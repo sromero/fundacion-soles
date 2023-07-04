@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,8 +38,11 @@ public class TareaController {
 
     // Read operation
     @GetMapping("/tareas")
-    public List<Tarea> fetchTareaList() {
-        return tareaService.fetchTareaList();
+    public List<Tarea> fetchTareaListByUser(@RequestParam("idVoluntario") String idVoluntario) {
+
+        Long idVoluntarioParsed = Long.parseLong(idVoluntario);
+
+        return tareaService.fetchTareaListByVoluntario(idVoluntarioParsed);
     }
 
     @GetMapping("/tareas/{idTarea}")
@@ -49,8 +53,7 @@ public class TareaController {
     // Update operation
     @PutMapping("/tareas/{idTarea}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public Tarea
-    updateTarea(@RequestBody Tarea tarea,
+    public Tarea updateTarea(@RequestBody Tarea tarea,
                 @PathVariable("idTarea") Long idTarea) {
         return tareaService.updateTarea(
                 tarea, idTarea);
@@ -59,7 +62,7 @@ public class TareaController {
     // Delete operation
     @DeleteMapping("/tareas/{idTarea}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String de(@PathVariable("idTarea")
+    public String deleteTarea(@PathVariable("idTarea")
                      Long idTarea) {
         tareaService.deleteTareaById(
                 idTarea);

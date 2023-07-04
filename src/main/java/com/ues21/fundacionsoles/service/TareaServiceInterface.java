@@ -12,11 +12,12 @@ public interface TareaServiceInterface {
     // Read operation
     List<Tarea> fetchTareaList();
 
+    List<Tarea> fetchTareaList(Long userId);
+
     Tarea fetchTareaById(Long idTarea);
 
     // Update operation
-    Tarea updateTarea(Tarea tarea,
-                                Long idTarea);
+    Tarea updateTarea(Tarea tarea, Long idTarea);
 
     // Delete operation
     void deleteTareaById(Long idTarea);

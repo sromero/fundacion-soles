@@ -20,12 +20,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Transactional
 @Log4j2
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    private AuthService authService;
 
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
@@ -101,4 +104,5 @@ public class AuthServiceImpl implements AuthService {
 
         return "User registered successfully!.";
     }
+
 }
