@@ -38,9 +38,6 @@ public class Tarea {
     private long idTarea;
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "estado")
-    private Estado estado;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date fechaFinalizacion;
@@ -57,4 +54,12 @@ public class Tarea {
     @JsonBackReference
     @JoinColumn(name = "idVoluntario")
     private Voluntario voluntario;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.ALL)
+    @JsonBackReference
+    @JoinColumn(name="id")
+    private Estado estado;
+
 }
