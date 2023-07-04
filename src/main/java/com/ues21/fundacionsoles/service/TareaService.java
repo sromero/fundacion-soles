@@ -29,7 +29,16 @@ public class TareaService implements TareaServiceInterface{
 
     @Override
     public List<Tarea> fetchTareaList() {
-        return (List<Tarea>)tareaRepository.findAll();
+        return (List<Tarea>) tareaRepository.findAll();
+    }
+
+    @Override
+    public List<Tarea> fetchTareaList(Long userId) {
+        return (List<Tarea>) tareaRepository.findAll();
+    }
+
+    public List<Tarea> fetchTareaListByVoluntario(Long userId) {
+        return tareaRepository.findAllByVoluntarioId(userId);
     }
 
     @Override

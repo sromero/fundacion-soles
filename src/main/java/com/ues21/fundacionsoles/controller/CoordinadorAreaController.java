@@ -29,7 +29,6 @@ public class CoordinadorAreaController {
 
     // Save operation
     @PostMapping("/coordinadoresA")
-
     public CoordinadorArea saveCoordinadorA(
             @Valid @RequestBody CoordinadorArea coordinadorArea)
     {
@@ -61,7 +60,6 @@ public class CoordinadorAreaController {
 
     // Delete operation
     @DeleteMapping("/coordinadoresA/{idCoordinador}")
-
     public String de(@PathVariable("idCoordinador")
                      Long idCoordinador)
     {

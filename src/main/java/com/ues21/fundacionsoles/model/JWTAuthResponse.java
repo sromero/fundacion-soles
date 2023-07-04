@@ -14,5 +14,6 @@ import java.util.List;
 public class JWTAuthResponse {
     private String accessToken;
     private String tokenType = "Bearer";
+    private Long userId;
     private List<String> roles;
 }

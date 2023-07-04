@@ -2,6 +2,7 @@ package com.ues21.fundacionsoles.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +34,7 @@ public class Voluntario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String nombre;
     private String apellido;
     private  String direccion;
@@ -41,12 +42,13 @@ public class Voluntario {
     private String correo;
     private String disponibilidadHoraria;
 
-    @JsonIgnoreProperties("voluntario")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="idArea")
     private Area area;
 
     @JsonIgnore
+    @JsonManagedReference
+    @JsonIgnoreProperties("voluntario")
     @OneToMany(mappedBy = "voluntario", cascade = CascadeType.ALL)
     private List<Tarea> tareasAsignadas;
 }

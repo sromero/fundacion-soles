@@ -1,5 +1,6 @@
 package com.ues21.fundacionsoles.service;
 
+import com.ues21.fundacionsoles.dto.RegisterDto;
 import com.ues21.fundacionsoles.model.Voluntario;
 import com.ues21.fundacionsoles.repository.VoluntarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import java.util.Objects;
 
 @Service
 public class VoluntarioService implements VoluntarioServiceInterface {
+
+    private AuthService authService;
 
     @Autowired
     private VoluntarioRepository voluntarioRepository;
