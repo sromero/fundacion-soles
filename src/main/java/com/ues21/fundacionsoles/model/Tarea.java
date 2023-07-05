@@ -56,10 +56,12 @@ public class Tarea {
     private Voluntario voluntario;
 
 
+    @JsonIgnore
+    @JsonIgnoreProperties("tarea")
     @ManyToOne(fetch = FetchType.EAGER)
-    @Cascade(CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name="id")
+    @JoinColumn(name="idEstado")
     private Estado estado;
+
+
 
 }

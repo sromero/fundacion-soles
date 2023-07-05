@@ -24,6 +24,8 @@ public class TareaController {
     @Autowired
     private final TareaService tareaService;
 
+
+
     public TareaController(TareaService tareaService) {
         this.tareaService = tareaService;
     }
@@ -49,6 +51,9 @@ public class TareaController {
     public Tarea fetchTareaById(@PathVariable("idTarea") Long idTarea) {
         return tareaService.fetchTareaById(idTarea);
     }
+
+
+
 
     // Update operation
     @PutMapping("/tareas/{idTarea}")
