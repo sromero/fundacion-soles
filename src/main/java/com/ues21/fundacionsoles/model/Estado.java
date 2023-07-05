@@ -37,7 +37,7 @@ public class Estado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long idEstado;
 
     private String descripcion; //in-progress o completed o cancelled
     private boolean active; //true o false
